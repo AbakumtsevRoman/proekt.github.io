@@ -1,0 +1,126 @@
+@startuml
+() declarations
+() route
+() DI
+() DOM
+() HTTP
+
+node "Browser" {
+
+[HTML] - DOM
+
+}
+
+node "Backend Server" {
+  [Backend Application] -- HTTP : "REST API"
+} 
+
+package "App Module" {
+
+component appmodule [
+NgModule
+
+app.module.ts
+]
+
+component index [
+Template
+
+index.html
+]
+
+
+DOM <- index
+appmodule ..> declarations
+index <-> appmodule
+
+
+}
+
+package "Forum Component" {
+
+component forumcomponent [
+Component
+
+app.component.ts
+]
+
+component forumtemplate [
+Template
+
+app.component.html
+]
+
+DOM <- forumtemplate
+declarations .. forumcomponent
+forumcomponent <--> forumtemplate
+forumcomponent . DI
+}
+
+package "App Routing Module" {
+
+component approutingmodule [
+NgModule
+
+app-routing.module.ts
+]
+
+appmodule -- approutingmodule
+approutingmodule --> route
+
+}
+
+package "Auto search Component" {
+
+component autocomponent [
+Component
+
+auto_search.component.ts
+]
+
+component autotemplate [
+Template
+
+auto_search.component.html
+]
+
+component automodel [
+Model
+
+retrocar.class.ts
+sportcar.class.ts
+]
+
+declarations .. autocomponent
+DOM <- autotemplate
+autocomponent . DI
+automodel -> autocomponent
+route -- autocomponent
+autocomponent <--> autotemplate
+}
+
+package "Forum Service" {
+
+component forumservice [
+Injectable
+
+forum.service.ts
+]
+
+forumservice .> DI
+HTTP <-- forumservice
+
+}
+package "Auto search Service" {
+
+component autoservice [
+Injectable
+
+auto.service.ts
+]
+
+autoservice .> DI
+HTTP <-- autoservice
+
+}
+@enduml
