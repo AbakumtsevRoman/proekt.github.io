@@ -1,0 +1,12 @@
+@startuml
+car <|-- retrocar
+car <|-- sportcar
+
+class car{
+year of issue data
+title text
+type text
+
+accelerates() time
+}
+@enduml
